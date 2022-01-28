@@ -1,0 +1,37 @@
+msg_outdated: 'Плагин %1% устарел!'
+msg_pleasedownload: 'Новая версия (%1%) доступна по адресу:'
+hlp_help: Помощь
+hlp_thishelp: '%1% - страница помощи'
+hlp_execcmd: '%1% - выполнить команду'
+hlp_typecmd: Type %1% - to get additional help
+hlp_typecmdpage: Наберите %1%, чтобы просмотреть соответствующую страницу помощи
+hlp_commands: 'Список команд:'
+hlp_cmdparam_command: команда
+hlp_cmdparam_page: страница
+hlp_cmdparam_parameter: параметр
+cmd_unknown: 'Незивестная команда: %1%'
+cmd_cmdpermerr: 'Не удалось выполнить команду (проверьте синтаксис, права доступа)'
+enabled: 'вкл.'
+disabled: 'выкл.'
+lst_title: 'Список:'
+lst_footer: 'Страница: [%1% / %2%]'
+lst_listisempty: Список пуст
+msg_config: Конфигурация
+cfgmsg_general_check-updates: 'Проверка обновлений: %1%'
+cfgmsg_general_language: 'Язык: %1%'
+cfgmsg_general_language-save: 'Сохранять файл перевода: %1%'
+hlp_cfg: '%1% - отобразить настройки'
+hlp_reload: '%1% - перезагрузить настройки из файла конфигурации'
+hlp_list: '%1% - список доступных schematic-файлов'
+hlp_load: '%1% - загрузить строения из файла и установить их'
+msg_unknownworld: Мир %1% не обнаружен
+msg_wrongcoordinate: 'Не удалось определить координаты: %1% (%2%,%3%,%4%)'
+msg_filenotloaded: 'Не удалось загрузить файл: %1%'
+msg_loadstarted: 'Начинаем зарузку данных из файла %2% и установку строений по координате %1%'
+msg_senderisnotplayer: 'Необходимо укзать координаты для размещения или запускать команду из самой игры'
+msg_reloaded: 'Настройки перезагружены'
+msg_filelist: 'Список schematic-файлов (расширение файло не отображается)'
+cfgmsg_schematic-loader_use-worldedit-folder: 'Использование директории WorldEdit: %1%'
+cfgmsg_schematic-loader_blocks-per-tick: 'Количество блоков для установки за один цикл: %1%'
+cfgmsg_schematic-loader_delay-between-ticks: 'Задержка (в тиках) между циклами (min = 1): %1%'
+cfgmsg_schematic-loader_fast-place: 'Быстрая установка блоков (физика отключена): %1%'
