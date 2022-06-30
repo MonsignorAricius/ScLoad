@@ -181,7 +181,11 @@ public class BlockPlacement {
         //
         //1.18.1
         //
-        //1.19?
+        //1.19
+        priorityMap.put(BlockTypes.FROGSPAWN, PlacementPriority.LAST);
+        priorityMap.put(BlockTypes.MANGROVE_LEAVES, PlacementPriority.LAST);
+        priorityMap.put(BlockTypes.MANGROVE_PROPAGULE, PlacementPriority.LAST);
+        priorityMap.put(BlockTypes.SCULK_VEIN, PlacementPriority.LAST);
         //
         BlockCategories.DOORS.getAll().forEach((type) -> {
             PlacementPriority var10000 = (PlacementPriority)priorityMap.put(type, PlacementPriority.FINAL);
