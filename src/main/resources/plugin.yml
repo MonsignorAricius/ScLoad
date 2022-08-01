@@ -3,7 +3,7 @@ main: me.aricius.scload.ScLoad
 version: 0.2.2
 depend: [WorldEdit]
 author: [ Aricius, fromgate, Exemplive ]
-api-version: 1.18
+api-version: 1.19
 commands:
   scload:
     aliases: [scl]
