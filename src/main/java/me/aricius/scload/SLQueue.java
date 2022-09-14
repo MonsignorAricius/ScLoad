@@ -161,7 +161,7 @@ public class SLQueue {
         for(counter = 0; counter < dimensions.getBlockX(); ++counter) {
             for(int y = 0; y < dimensions.getBlockY(); ++y) {
                 for(i = 0; i < dimensions.getBlockZ(); ++i) {
-                    if (pos2.getBlockY() + y >= 0 && pos2.getBlockY() + y < this.world.getMaxHeight()) {
+                    if (pos2.getBlockY() + y >= this.world.getMinHeight() && pos2.getBlockY() + y < this.world.getMaxHeight()) {
                         BlockVector3 altpos = BlockVector3.at(counter, y, i).add(bac.getMinimumPoint());
                         BlockState bb = bac.getBlock(altpos);
                         CompoundTag nbt = bac.getFullBlock(altpos).getNbtData();
