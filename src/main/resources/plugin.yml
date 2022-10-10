@@ -1,7 +1,7 @@
 name: ScLoad
 main: me.aricius.scload.ScLoad
-version: 0.2.3
-depend: [WorldEdit]
+version: 1.4.1
+softdepend: [FastAsyncWorldEdit, WorldEdit]
 author: [ Aricius, fromgate, Exemplive ]
 api-version: 1.19
 commands:

@@ -1,11 +1,17 @@
 package me.aricius.scload;
 
 import java.io.File;
+
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ScLoad extends JavaPlugin {
     boolean use_we_folder = true;
+    boolean use_fawe_folder = true;
     int blockpertick = 5000;
     int delay = 2;
     boolean vcheck = false;
@@ -22,11 +28,28 @@ public class ScLoad extends JavaPlugin {
     }
 
     public void onEnable() {
-        this.reloadCfg();
-        this.u = new SLUtil(this, this.vcheck, this.language_save, this.language);
-        this.getCommand("scload").setExecutor(this.u);
-        this.schem_dir = this.getSchematicDirectory();
-        instance = this;
+        if (this.getServer().getPluginManager().getPlugin("WorldEdit")!=null || this.getServer().getPluginManager().getPlugin("FastAsyncWorldEdit")!=null) {
+            this.reloadCfg();
+            this.u = new SLUtil(this, this.vcheck, this.language_save, this.language);
+            this.getCommand("scload").setExecutor(this.u);
+            this.schem_dir = this.getSchematicDirectory();
+            instance = this;
+        } else {
+            this.getServer().getLogger().severe("ScLoad requires WorldEdit or FastAsyncWorldEdit plugin installed, disabling plugin.");
+            this.getServer().getPluginManager().disablePlugin(this);
+        }
+    }
+    @EventHandler
+    public void onPlayerJoinEvent(PlayerJoinEvent e) {
+        Player p = e.getPlayer();
+        if (p.isOp()) {
+            new UpdateChecker(this, 88674).getVersion(version -> {
+                if (!this.getDescription().getVersion().equals(version)) {
+                    getServer().getLogger().info(ChatColor.GREEN+"[ScLoad] There is a new version "+ChatColor.BLUE+version+" avalible. Currently "+ChatColor.YELLOW+this.getDescription().getVersion());
+                    getServer().getLogger().info(ChatColor.GREEN+"https://www.spigotmc.org/resources/scload-reloaded.88674/");
+                }
+            });
+        }
     }
 
     public void reloadCfg() {
@@ -39,6 +62,8 @@ public class ScLoad extends JavaPlugin {
         this.getConfig().set("general.check-updates", this.vcheck);
         this.use_we_folder = this.getConfig().getBoolean("schematic-loader.use-worldedit-folder", true);
         this.getConfig().set("schematic-loader.use-worldedit-folder", this.use_we_folder);
+        this.use_fawe_folder = this.getConfig().getBoolean("schematic-loader.use-fastasyncworldedit-folder", false);
+        this.getConfig().set("schematic-loader.use-fastasyncworldedit-folder", this.use_fawe_folder);
         this.blockpertick = this.getConfig().getInt("schematic-loader.blocks-per-tick", 5000);
         this.getConfig().set("schematic-loader.blocks-per-tick", this.blockpertick);
         this.delay = this.getConfig().getInt("schematic-loader.delay-between-ticks", 2);
@@ -52,7 +77,12 @@ public class ScLoad extends JavaPlugin {
 
     private String getSchematicDirectory() {
         String dir = this.getDataFolder() + File.separator + "schematics";
-        if (this.use_we_folder) {
+        if (this.use_fawe_folder) {
+            Plugin fawe = this.getServer().getPluginManager().getPlugin("FastAsyncWorldEdit");
+            if (fawe != null) {
+                dir = fawe.getDataFolder() + File.separator + "schematics";
+            }
+        } else if (this.use_we_folder) {
             Plugin we = this.getServer().getPluginManager().getPlugin("WorldEdit");
             if (we != null) {
                 dir = we.getDataFolder() + File.separator + "schematics";
