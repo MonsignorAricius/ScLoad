@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class ScLoad extends JavaPlugin {
     boolean use_we_folder = true;
     boolean use_fawe_folder = true;
-    int blockpertick = 5000;
+    int blockpertick = 3000;
     int delay = 2;
     boolean vcheck = false;
     boolean language_save = false;
@@ -41,14 +41,17 @@ public class ScLoad extends JavaPlugin {
     }
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
+
         Player p = e.getPlayer();
-        if (p.isOp()) {
-            new UpdateChecker(this, 88674).getVersion(version -> {
-                if (!this.getDescription().getVersion().equals(version)) {
-                    getServer().getLogger().info(ChatColor.GREEN+"[ScLoad] There is a new version "+ChatColor.BLUE+version+" avalible. Currently "+ChatColor.YELLOW+this.getDescription().getVersion());
-                    getServer().getLogger().info(ChatColor.GREEN+"https://www.spigotmc.org/resources/scload-reloaded.88674/");
-                }
-            });
+        if (vcheck) {
+            if (p.isOp()) {
+                new UpdateChecker(this, 88674).getVersion(version -> {
+                    if (!this.getDescription().getVersion().equals(version)) {
+                        getServer().getLogger().info(ChatColor.GREEN+"[ScLoad] There is a new version "+ChatColor.BLUE+version+" avalible. Currently "+ChatColor.YELLOW+this.getDescription().getVersion());
+                        getServer().getLogger().info(ChatColor.GREEN+"https://www.spigotmc.org/resources/scload-reloaded.88674/");
+                    }
+                });
+            }
         }
     }
 
@@ -64,7 +67,7 @@ public class ScLoad extends JavaPlugin {
         this.getConfig().set("schematic-loader.use-worldedit-folder", this.use_we_folder);
         this.use_fawe_folder = this.getConfig().getBoolean("schematic-loader.use-fastasyncworldedit-folder", false);
         this.getConfig().set("schematic-loader.use-fastasyncworldedit-folder", this.use_fawe_folder);
-        this.blockpertick = this.getConfig().getInt("schematic-loader.blocks-per-tick", 5000);
+        this.blockpertick = this.getConfig().getInt("schematic-loader.blocks-per-tick", 3000);
         this.getConfig().set("schematic-loader.blocks-per-tick", this.blockpertick);
         this.delay = this.getConfig().getInt("schematic-loader.delay-between-ticks", 2);
         this.getConfig().set("schematic-loader.delay-between-ticks", this.delay);
