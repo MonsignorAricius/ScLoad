@@ -9,9 +9,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class ScLoad extends JavaPlugin {
+public class ScLoad extends JavaPlugin{
     boolean use_we_folder = true;
-    boolean use_fawe_folder = true;
+    boolean use_fawe_folder = false;
     int blockpertick = 3000;
     int delay = 2;
     boolean vcheck = false;
@@ -19,7 +19,6 @@ public class ScLoad extends JavaPlugin {
     String language = "english";
     boolean fastplace = true;
     boolean usePermPerFile = false;
-    boolean undo_enabled = true;
     String schem_dir;
     SLUtil u;
     static ScLoad instance;
@@ -30,28 +29,14 @@ public class ScLoad extends JavaPlugin {
     public void onEnable() {
         if (this.getServer().getPluginManager().getPlugin("WorldEdit")!=null || this.getServer().getPluginManager().getPlugin("FastAsyncWorldEdit")!=null) {
             this.reloadCfg();
-            this.u = new SLUtil(this, this.vcheck, this.language_save, this.language);
+            this.u = new SLUtil(this, this.language_save, this.language);
+            this.getServer().getPluginManager().registerEvents(new PlayerJoinEventListener(this), this);
             this.getCommand("scload").setExecutor(this.u);
             this.schem_dir = this.getSchematicDirectory();
             instance = this;
         } else {
             this.getServer().getLogger().severe("ScLoad requires WorldEdit or FastAsyncWorldEdit plugin installed, disabling plugin.");
             this.getServer().getPluginManager().disablePlugin(this);
-        }
-    }
-    @EventHandler
-    public void onPlayerJoinEvent(PlayerJoinEvent e) {
-
-        Player p = e.getPlayer();
-        if (vcheck) {
-            if (p.isOp()) {
-                new UpdateChecker(this, 88674).getVersion(version -> {
-                    if (!this.getDescription().getVersion().equals(version)) {
-                        getServer().getLogger().info(ChatColor.GREEN+"[ScLoad] There is a new version "+ChatColor.BLUE+version+" avalible. Currently "+ChatColor.YELLOW+this.getDescription().getVersion());
-                        getServer().getLogger().info(ChatColor.GREEN+"https://www.spigotmc.org/resources/scload-reloaded.88674/");
-                    }
-                });
-            }
         }
     }
 

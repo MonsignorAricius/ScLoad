@@ -7,32 +7,34 @@ public class VChunk {
     int z;
 
     public VChunk(BlockVector3 bv) {
-        this.x = bv.getBlockX() >> 4;
-        this.z = bv.getBlockZ() >> 4;
+        x = bv.getBlockX() >> 4;
+        z = bv.getBlockZ() >> 4;
     }
 
+    @Override
     public int hashCode() {
-        boolean prime = true;
+        final int prime = 31;
         int result = 1;
-        result = 31 * result + this.x;
-        result = 31 * result + this.z;
+        result = prime * result + x;
+        result = prime * result + z;
         return result;
     }
 
+    @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        } else if (obj == null) {
+        if (obj == null)
             return false;
-        } else if (!(obj instanceof VChunk)) {
+        if (!(obj instanceof VChunk))
             return false;
-        } else {
-            VChunk other = (VChunk)obj;
-            if (this.x != other.x) {
-                return false;
-            } else {
-                return this.z == other.z;
-            }
-        }
+        VChunk other = (VChunk) obj;
+        if (x != other.x)
+            return false;
+        if (z != other.z)
+            return false;
+        return true;
     }
+
+
 }

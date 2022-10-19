@@ -1,10 +1,12 @@
 package me.aricius.scload;
 
 import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.session.PasteBuilder;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;

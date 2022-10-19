@@ -32,6 +32,8 @@ msg_senderisnotplayer: 'Необходимо укзать координаты �
 msg_reloaded: 'Настройки перезагружены'
 msg_filelist: 'Список schematic-файлов (расширение файло не отображается)'
 cfgmsg_schematic-loader_use-worldedit-folder: 'Использование директории WorldEdit: %1%'
+cfgmsg_schematic-loader_use-fastasyncworldedit-folder: 'Использование директории FastAsyncWorldEdit: %1%'
 cfgmsg_schematic-loader_blocks-per-tick: 'Количество блоков для установки за один цикл: %1%'
 cfgmsg_schematic-loader_delay-between-ticks: 'Задержка (в тиках) между циклами (min = 1): %1%'
+cfgmsg_schematic-loader_use-permission-per-file: 'Использовать разрешение на файл: %1%'
 cfgmsg_schematic-loader_fast-place: 'Быстрая установка блоков (физика отключена): %1%'

@@ -26,72 +26,53 @@ public class VBlock {
 
     public void placeBlockFast() {
         try {
-            this.world.setBlock(this.bvector, this.block, false);
-        } catch (WorldEditException var2) {
-            var2.printStackTrace();
+            world.setBlock(bvector, bblock, false);
+        } catch (WorldEditException e) {
+            e.printStackTrace();
         }
-
     }
 
     public void placeBlock() {
-        try {
-            this.world.setBlock(this.bvector, this.block, true);
-        } catch (WorldEditException var2) {
-            var2.printStackTrace();
-        }
 
+        try {
+            world.setBlock(bvector, bblock, true);
+        } catch (WorldEditException e) {
+            e.printStackTrace();
+        }
     }
 
     public BlockType getTypeId() {
         return this.bblock.getBlockType();
     }
 
+
     public int calcHashCode() {
         int prime = 31;
-        int result = this.bvector.getBlockX() >> 4;
-        if (result < 0) {
-            result = result * -1 * prime;
-        }
-
-        result = result * prime + (this.bvector.getBlockZ() >> 4);
-        if (result < 0) {
-            result = result * -1 * prime;
-        }
-
+        int result = bvector.getBlockX() >> 4;
+        if (result < 0) result = result * (-1) * prime;
+        result = result * prime + (bvector.getBlockZ() >> 4);
+        if (result < 0) result = result * (-1) * prime;
         return result;
     }
 
+    @Override
     public int hashCode() {
         return this.hash;
     }
 
+    @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        } else if (obj == null) {
-            return false;
-        } else if (!(obj instanceof VBlock)) {
-            return false;
-        } else if (this.world == null) {
-            return false;
-        } else {
-            VBlock other = (VBlock)obj;
-            if (other.world == null) {
-                return false;
-            } else if (!this.world.getWorld().equals(other.world.getWorld())) {
-                return false;
-            } else if (this.bvector == null) {
-                return false;
-            } else if (other.bvector == null) {
-                return false;
-            } else if (this.bvector.getBlockX() != other.bvector.getBlockX()) {
-                return false;
-            } else if (this.bvector.getBlockY() != other.bvector.getBlockY()) {
-                return false;
-            } else {
-                return this.bvector.getBlockZ() == other.bvector.getBlockZ();
-            }
-        }
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof VBlock)) return false;
+        if (world == null) return false;
+        VBlock other = (VBlock) obj;
+        if (other.world == null) return false;
+        if (!world.getWorld().equals(other.world.getWorld())) return false;
+        if (bvector == null) return false;
+        if (other.bvector == null) return false;
+        if (bvector.getBlockX() != other.bvector.getBlockX()) return false;
+        if (bvector.getBlockY() != other.bvector.getBlockY()) return false;
+        return (bvector.getBlockZ() == other.bvector.getBlockZ());
     }
 }
-
