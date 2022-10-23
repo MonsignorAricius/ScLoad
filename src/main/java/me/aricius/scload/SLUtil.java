@@ -147,8 +147,7 @@ public class SLUtil extends FGUtilCore implements CommandExecutor, Listener {
                                 return true;
                             }
                             BlockVector3 v = BlockVector3.at(x, y, z);
-                            Player p = (Player)sender;
-                            QueueManager.addQueue(p, w, v, args[1], ignoreAir);
+                            QueueManager.addQueue(sender, w, v, args[1], ignoreAir);
                             printMSG(sender, "msg_loadstartednoair", new Location(w, x, y, z), args[1]);
                             return true;
                         }
