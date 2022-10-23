@@ -29,6 +29,7 @@ import org.bukkit.entity.Entity;
 public class SLQueue {
     boolean flag_loaded = false;
     boolean flag_finished = false;
+    boolean noair = false;
     World world;
     BukkitWorld worldeditworld;
     BlockVector3 pos;
@@ -48,6 +49,17 @@ public class SLQueue {
         return this.flag_loaded;
     }
 
+    SLQueue(World w, BlockVector3 v, String filename, boolean ignoreAir) throws FileNotFoundException {
+        this.world = w;
+        this.pos = v;
+        this.bac = this.load(filename);
+        this.noair = ignoreAir;
+        if (this.bac == null) {
+            throw new FileNotFoundException("Schematic file not found.");
+        } else {
+            this.worldeditworld = new BukkitWorld(w);
+        }
+    }
     SLQueue(World w, BlockVector3 v, String filename) throws FileNotFoundException {
         this.world = w;
         this.pos = v;
@@ -287,7 +299,17 @@ public class SLQueue {
                 }
             }
 
-            if (this.plg().fastplace) {
+            if (noair) {
+                if (this.plg().fastplace) {
+                    for(i = 0; i < blocks.size(); ++i) {
+                        ((VBlock)blocks.get(i)).placeBlockFastWithoutAir();
+                    }
+                } else {
+                    for(i = 0; i < blocks.size(); ++i) {
+                        ((VBlock)blocks.get(i)).placeBlockWithoutAir();
+                    }
+                }
+            } else if (this.plg().fastplace) {
                 for(i = 0; i < blocks.size(); ++i) {
                     ((VBlock)blocks.get(i)).placeBlockFast();
                 }

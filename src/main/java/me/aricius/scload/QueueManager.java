@@ -1,7 +1,7 @@
 package me.aricius.scload;
 
 import com.sk89q.worldedit.math.BlockVector3;
-import com.sk89q.worldedit.session.PasteBuilder;
+
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,6 +21,9 @@ public class QueueManager {
     public static boolean addQueue(Player player, String fileName) {
         return qman.containsKey(player.getName()) && ((SLQueue)qman.get(player.getName())).isActive() ? false : addQueue(player, player.getWorld(), BlockVector3.at(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()), fileName);
     }
+    public static boolean addQueue(Player player, String fileName, boolean ignoreAir) {
+        return qman.containsKey(player.getName()) && ((SLQueue)qman.get(player.getName())).isActive() ? false : addQueue(player, player.getWorld(), BlockVector3.at(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()), fileName, ignoreAir);
+    }
 
     public static boolean addQueue(CommandSender sender, World world, BlockVector3 v, String fileName) {
         if (qman.containsKey(sender.getName()) && ((SLQueue)qman.get(sender.getName())).isActive()) {
@@ -30,6 +33,25 @@ public class QueueManager {
 
             try {
                 slQueue = new SLQueue(world, v, fileName);
+            } catch (FileNotFoundException var6) {
+                sender.sendMessage(ChatColor.RED + "Schematic file not found.");
+                return false;
+            }
+
+            qman.put(sender.getName(), slQueue);
+            startNext();
+            return true;
+        }
+    }
+
+    public static boolean addQueue(CommandSender sender, World world, BlockVector3 v, String fileName, boolean ignoreAir) {
+        if (qman.containsKey(sender.getName()) && ((SLQueue)qman.get(sender.getName())).isActive()) {
+            return false;
+        } else {
+            SLQueue slQueue = null;
+
+            try {
+                slQueue = new SLQueue(world, v, fileName, ignoreAir);
             } catch (FileNotFoundException var6) {
                 sender.sendMessage(ChatColor.RED + "Schematic file not found.");
                 return false;

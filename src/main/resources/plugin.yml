@@ -1,6 +1,6 @@
 name: ScLoad
 main: me.aricius.scload.ScLoad
-version: 1.4.3
+version: 1.4.4
 softdepend: [FastAsyncWorldEdit, WorldEdit]
 author: [ Aricius, fromgate, Exemplive ]
 api-version: 1.19
@@ -10,7 +10,9 @@ commands:
     description: ScLoad command
     usage: |
       /scload load <filename>
-      /scload load <filename> <world>
+      /scload load <filename> <-air>
+      /scload load <filename> <world> <x> <y> <z>
+      /scload load <filename> <world> <x> <y> <z> <-air>
       /scload reload
       /scload cfg
-
+      /scload list

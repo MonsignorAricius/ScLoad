@@ -4,9 +4,13 @@ import com.sk89q.jnbt.CompoundTag;
 import com.sk89q.worldedit.WorldEditException;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.session.PasteBuilder;
 import com.sk89q.worldedit.world.block.BaseBlock;
 import com.sk89q.worldedit.world.block.BlockState;
 import com.sk89q.worldedit.world.block.BlockType;
+import com.sk89q.worldedit.session.ClipboardHolder;
+import com.sk89q.worldedit.world.block.BlockTypes;
+import org.bukkit.Material;
 import org.bukkit.World;
 
 public class VBlock {
@@ -33,9 +37,31 @@ public class VBlock {
     }
 
     public void placeBlock() {
-
         try {
             world.setBlock(bvector, bblock, true);
+        } catch (WorldEditException e) {
+            e.printStackTrace();
+        }
+    }
+    public void placeBlockFastWithoutAir() {
+        try {
+            if (getTypeId().equals(BlockTypes.AIR)) {
+                return;
+            } else {
+                world.setBlock(bvector, bblock, false);
+            }
+        } catch (WorldEditException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void placeBlockWithoutAir() {
+        try {
+            if (getTypeId().equals(BlockTypes.AIR)) {
+                return;
+            } else {
+                world.setBlock(bvector, bblock, true);
+            }
         } catch (WorldEditException e) {
             e.printStackTrace();
         }

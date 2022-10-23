@@ -5,16 +5,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 
 public class SLUtil extends FGUtilCore implements CommandExecutor, Listener {
     ScLoad plg;
@@ -63,21 +62,38 @@ public class SLUtil extends FGUtilCore implements CommandExecutor, Listener {
                     Player p = (Player)sender;
                     QueueManager.addQueue(p, args[1]);
                     printMSG(p, "msg_loadstarted", p.getLocation(), args[1]);
-                } else if (args[0].equalsIgnoreCase("list")) {
-                    int page = 1;
-                    if (isIntegerGZ(args[1])) page = Integer.parseInt(args[1]);
-                    File f = new File(plg.schem_dir);
-                    List<String> files = new ArrayList<String>();
-                    for (String fn : f.list())
-                        if (fn.endsWith(".schematic") || fn.endsWith(".schem")) files.add(fn.substring(0, fn.length() - 6));
-                    printPage(sender, files, page, "msg_filelist", "", false, 20);
-
                 } else return false;
                 return true;
             }
             //End of 2nd command.
 
             //3rd command.
+            if (args.length == 3) {
+                if (args[0].equalsIgnoreCase("load")) {
+                    if (!this.checkPerFilePermission(sender instanceof Player ? (Player)sender : null, args[1])) {
+                        return this.returnMSG(true, sender, "msg_nopermforfile", args[1], 'c', '4');
+                    }
+
+                    if (!(sender instanceof Player)) {
+                        printMSG(sender, "msg_senderisnotplayer", 'c');
+                        return true;
+                    }
+                    boolean ignoreAir;
+                    if (args[2].equalsIgnoreCase("-a") || args[2].equalsIgnoreCase("-air")) {
+                        ignoreAir = true;
+                    } else {
+                        sender.sendMessage(ChatColor.RED+"Last argument must be -a or -air");
+                        return true;
+                    }
+                    Player p = (Player)sender;
+                    QueueManager.addQueue(p, args[1], ignoreAir);
+                    printMSG(p, "msg_loadstartednoair", p.getLocation(), args[1]);
+                } else return false;
+                return true;
+            }
+            //End of 3rd command.
+
+            //4th command.
             if (args.length == 6) {
                 if (args[0].equalsIgnoreCase("load")) {
                     if (!this.checkPerFilePermission(sender instanceof Player ? (Player)sender : null, args[1])) {
@@ -104,8 +120,52 @@ public class SLUtil extends FGUtilCore implements CommandExecutor, Listener {
                     return false;
                 }
             }
-            //End of 3rd command.
-            if (args.length >= 7) {
+            //End of 4th command.
+
+            //5th command.
+            if (args.length == 7) {
+                if (args[0].equalsIgnoreCase("load")) {
+                    if (!this.checkPerFilePermission(sender instanceof Player ? (Player)sender : null, args[1])) {
+                        return this.returnMSG(true, sender, "msg_nopermforfile", args[1], 'c', '4');
+                    } else {
+                        World w = Bukkit.getWorld(args[2]);
+                        if (w == null) {
+                            printMSG(sender, "msg_unknownworld", 'c', '4', args[2]);
+                            return true;
+                        } else if (!this.isIntegerSigned(args[3], args[4], args[5])) {
+                            this.printMSG(sender, "msg_wrongcoordinate", 'c', '4', args[3], args[4], args[5]);
+                            return true;
+                        } else {
+                            int x = Integer.parseInt(args[3]);
+                            int y = Integer.parseInt(args[4]);
+                            int z = Integer.parseInt(args[5]);
+                            boolean ignoreAir;
+                            if (args[6].equalsIgnoreCase("-a") || args[6].equalsIgnoreCase("-air")) {
+                                ignoreAir = true;
+                            } else {
+                                sender.sendMessage(ChatColor.RED+"Last argument must be -a or -air");
+                                return true;
+                            }
+                            BlockVector3 v = BlockVector3.at(x, y, z);
+                            Player p = (Player)sender;
+                            QueueManager.addQueue(p, w, v, args[1], ignoreAir);
+                            printMSG(sender, "msg_loadstartednoair", new Location(w, x, y, z), args[1]);
+                            return true;
+                        }
+                    }
+                } else {
+                    return false;
+                }
+            }
+            //End of 5th commad.
+
+            if (args.length == 4) {
+                printMsg(sender, ChatColor.RED+"Invalid arguments. /scload help.");
+            }
+            if (args.length == 5) {
+                printMsg(sender, ChatColor.RED+"Invalid arguments. /scload help.");
+            }
+            if (args.length >= 8) {
                 printMsg(sender, ChatColor.RED+"Invalid arguments. /scload help.");
             }
         } else {
@@ -132,6 +192,7 @@ public class SLUtil extends FGUtilCore implements CommandExecutor, Listener {
         this.addMSG("msg_wrongcoordinate", "Failed to determine location from coordinates:  %1% (%2%,%3%,%4%)");
         this.addMSG("msg_filenotloaded", "Failed to load file: %1%");
         this.addMSG("msg_loadstarted", "File %2% was loaded. Starting to build at %1%");
+        this.addMSG("msg_loadstartednoair", "File %2% was loaded. Starting to build without air at %1%");
         this.addMSG("msg_senderisnotplayer", "You need to specify the world and coordinates or run this command as a logged player");
         this.addMSG("msg_reloaded", "Configuration reloaded");
         this.addMSG("msg_filelist", "File list (extension not shown)");
