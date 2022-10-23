@@ -28,6 +28,7 @@ public class ScLoad extends JavaPlugin{
             this.u = new SLUtil(this, this.language_save, this.language);
             this.getServer().getPluginManager().registerEvents(new PlayerJoinEventListener(this), this);
             this.getCommand("scload").setExecutor(this.u);
+            this.getCommand("scload").setTabCompleter(new TabCompletions());
             this.schem_dir = this.getSchematicDirectory();
             instance = this;
         } else {
