@@ -31,13 +31,13 @@ public abstract class FGUtilCore {
     private String plgcmd = "<command>";
     YamlConfiguration lng;
     private boolean savelng = false;
-    protected HashMap<String, String> msg = new HashMap();
+    protected HashMap<String, String> msg = new HashMap<String, String>();
     private char c1 = 'a';
     private char c2 = '2';
     protected String msglist = "";
     private boolean colorconsole = false;
-    private Set<String> log_once = new HashSet();
-    protected HashMap<String, FGUtilCore.Cmd> cmds = new HashMap();
+    private Set<String> log_once = new HashSet<String>();
+    protected HashMap<String, FGUtilCore.Cmd> cmds = new HashMap<String, FGUtilCore.Cmd>();
     protected String cmdlist = "";
     PluginDescriptionFile des;
     private Logger log = Logger.getLogger("Minecraft");
@@ -45,12 +45,12 @@ public abstract class FGUtilCore {
     BukkitTask chId;
     private boolean project_check_version = true;
     private String project_id = "";
-    private String project_name = "";
-    private String project_current_version = "";
     private String project_last_version = "";
     private String project_curse_url = "";
     private String version_info_perm;
     private String project_bukkitdev;
+    private String project_name = "";
+    private String project_current_version = "";
 
     public FGUtilCore(JavaPlugin plg, boolean savelng, String lng, String plgcmd, String permissionPrefix) {
         this.version_info_perm = this.permprefix + "config";
@@ -272,7 +272,7 @@ public abstract class FGUtilCore {
     }
 
     public void giveItemOrDrop(Player p, ItemStack item) {
-        Iterator var3 = p.getInventory().addItem(new ItemStack[]{item}).values().iterator();
+        Iterator<ItemStack> var3 = p.getInventory().addItem(new ItemStack[]{item}).values().iterator();
 
         while(var3.hasNext()) {
             ItemStack i = (ItemStack)var3.next();
@@ -299,7 +299,7 @@ public abstract class FGUtilCore {
     }
 
     public void broadcastMSG(String perm, Object... s) {
-        Iterator var3 = Bukkit.getOnlinePlayers().iterator();
+        Iterator<? extends Player> var3 = Bukkit.getOnlinePlayers().iterator();
 
         while(var3.hasNext()) {
             Player p = (Player)var3.next();
@@ -311,7 +311,7 @@ public abstract class FGUtilCore {
     }
 
     public void broadcastMsg(String perm, String msg) {
-        Iterator var3 = Bukkit.getOnlinePlayers().iterator();
+        Iterator<? extends Player> var3 = Bukkit.getOnlinePlayers().iterator();
 
         while(var3.hasNext()) {
             Player p = (Player)var3.next();
@@ -355,7 +355,7 @@ public abstract class FGUtilCore {
 
     public void fillLoadedMessages() {
         if (this.lng != null) {
-            Iterator var1 = this.lng.getKeys(true).iterator();
+            Iterator<String> var1 = this.lng.getKeys(true).iterator();
 
             while(var1.hasNext()) {
                 String key = (String)var1.next();
@@ -465,7 +465,7 @@ public abstract class FGUtilCore {
 
     public void PrintHlpList(CommandSender p, int page, int lpp) {
         String title = "&6&l" + this.project_name + " v" + this.des.getVersion() + " &r&6| " + this.getMSG("hlp_help", '6');
-        List<String> hlp = new ArrayList();
+        List<String> hlp = new ArrayList<String>();
         hlp.add(this.getMSG("hlp_thishelp", "/" + this.plgcmd + " help"));
         hlp.add(this.getMSG("hlp_execcmd", "/" + this.plgcmd + " <" + this.getMSG("hlp_cmdparam_command", '2') + "> [" + this.getMSG("hlp_cmdparam_parameter", '2') + "]"));
         if (p instanceof Player) {
@@ -522,7 +522,7 @@ public abstract class FGUtilCore {
     }
 
     public boolean isPlayerAround(Location loc, int radius) {
-        Iterator var3 = loc.getWorld().getPlayers().iterator();
+        Iterator<? extends Player> var3 = loc.getWorld().getPlayers().iterator();
 
         while(var3.hasNext()) {
             Player p = (Player)var3.next();
@@ -577,9 +577,9 @@ public abstract class FGUtilCore {
     }
 
     public void printConfig(CommandSender p, int page, int lpp, boolean section, boolean usetranslation) {
-        List<String> cfgprn = new ArrayList();
+        List<String> cfgprn = new ArrayList<String>();
         if (!this.plg.getConfig().getKeys(true).isEmpty()) {
-            Iterator var7 = this.plg.getConfig().getKeys(true).iterator();
+            Iterator<String> var7 = this.plg.getConfig().getKeys(true).iterator();
 
             label33:
             while(true) {

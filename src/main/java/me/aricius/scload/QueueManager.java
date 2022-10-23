@@ -13,7 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class QueueManager {
-    private static Map<String, SLQueue> qman = new HashMap();
+    private static Map<String, SLQueue> qman = new HashMap<String, SLQueue>();
 
     public QueueManager() {
     }
@@ -75,7 +75,7 @@ public class QueueManager {
         if (isActive()) {
             return null;
         } else {
-            Iterator var0 = qman.values().iterator();
+            Iterator<SLQueue> var0 = qman.values().iterator();
 
             while(var0.hasNext()) {
                 SLQueue q = (SLQueue)var0.next();
@@ -89,7 +89,7 @@ public class QueueManager {
     }
 
     public static boolean isActive() {
-        Iterator var0 = qman.values().iterator();
+        Iterator<SLQueue> var0 = qman.values().iterator();
 
         while(var0.hasNext()) {
             SLQueue q = (SLQueue)var0.next();
