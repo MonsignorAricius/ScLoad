@@ -161,11 +161,11 @@ public class SLQueue {
     }
 
     public void addDelayed(BlockVector3 pos2, BlockArrayClipboard bac) {
-        this.queue = new ArrayList();
-        this.chunked = new HashMap();
-        List<VBlock> first = new ArrayList();
-        List<VBlock> last = new ArrayList();
-        List<VBlock> fin = new ArrayList();
+        this.queue = new ArrayList<List<VBlock>>();
+        this.chunked = new HashMap<VChunk, List<VBlock>>();
+        List<VBlock> first = new ArrayList<VBlock>();
+        List<VBlock> last = new ArrayList<VBlock>();
+        List<VBlock> fin = new ArrayList<VBlock>();
         BlockVector3 dimensions = bac.getDimensions();
 
         int counter;
@@ -181,24 +181,24 @@ public class SLQueue {
                         VChunk vch = new VChunk(bv);
                         VBlock vb = new VBlock(this.world, bv, bb, nbt);
                         if (!this.chunked.containsKey(vch)) {
-                            this.chunked.put(vch, new ArrayList());
+                            this.chunked.put(vch, new ArrayList<VBlock>());
                         }
 
-                        ((List)this.chunked.get(vch)).add(vb);
+                        ((List<VBlock>)this.chunked.get(vch)).add(vb);
                     }
                 }
             }
         }
 
         if (!this.chunked.isEmpty()) {
-            Iterator var16 = this.chunked.keySet().iterator();
+            Iterator<VChunk> var16 = this.chunked.keySet().iterator();
 
             VBlock vb;
             while(var16.hasNext()) {
                 VChunk vch = (VChunk)var16.next();
 
-                for(i = 0; i < ((List)this.chunked.get(vch)).size(); ++i) {
-                    vb = (VBlock)((List)this.chunked.get(vch)).get(i);
+                for(i = 0; i < ((List<VBlock>)this.chunked.get(vch)).size(); ++i) {
+                    vb = (VBlock)((List<VBlock>)this.chunked.get(vch)).get(i);
                     if (BlockPlacement.shouldPlaceFinal(vb.bblock.getBlockType())) {
                         fin.add(vb);
                     } else if (BlockPlacement.shouldPlaceLast(vb.bblock.getBlockType())) {
@@ -211,14 +211,14 @@ public class SLQueue {
 
             counter = 0;
             this.queue.clear();
-            List<VBlock> bpt = new ArrayList();
+            List<VBlock> bpt = new ArrayList<VBlock>();
             if (!first.isEmpty()) {
                 for(i = 0; i < first.size(); ++i) {
                     vb = (VBlock)first.get(i);
                     ++counter;
                     if (counter >= this.plg().blockpertick) {
                         this.queue.add(bpt);
-                        bpt = new ArrayList();
+                        bpt = new ArrayList<VBlock>();
                         counter = 0;
                     }
 
@@ -228,14 +228,14 @@ public class SLQueue {
                 this.queue.add(bpt);
             }
 
-            bpt = new ArrayList();
+            bpt = new ArrayList<VBlock>();
             if (!last.isEmpty()) {
                 for(i = 0; i < last.size(); ++i) {
                     vb = (VBlock)last.get(i);
                     ++counter;
                     if (counter >= this.plg().blockpertick) {
                         this.queue.add(bpt);
-                        bpt = new ArrayList();
+                        bpt = new ArrayList<VBlock>();
                         counter = 0;
                     }
 
@@ -245,14 +245,14 @@ public class SLQueue {
                 this.queue.add(bpt);
             }
 
-            bpt = new ArrayList();
+            bpt = new ArrayList<VBlock>();
             if (!fin.isEmpty()) {
                 for(i = 0; i < fin.size(); ++i) {
                     vb = (VBlock)fin.get(i);
                     ++counter;
                     if (counter >= this.plg().blockpertick) {
                         this.queue.add(bpt);
-                        bpt = new ArrayList();
+                        bpt = new ArrayList<VBlock>();
                         counter = 0;
                     }
 
@@ -269,7 +269,7 @@ public class SLQueue {
         if (!this.queue.isEmpty()) {
             Bukkit.getScheduler().runTaskLater(this.plg(), new Runnable() {
                 public void run() {
-                    SLQueue.this.placeBlocks((List)SLQueue.this.queue.get(0));
+                    SLQueue.this.placeBlocks((List<VBlock>)SLQueue.this.queue.get(0));
                     SLQueue.this.queue.remove(0);
                     if (!SLQueue.this.queue.isEmpty()) {
                         SLQueue.this.processQueue();
@@ -325,7 +325,7 @@ public class SLQueue {
     public void refreshChunks(final Set<VChunk> vchs) {
         Bukkit.getScheduler().runTaskLaterAsynchronously(this.plg(), new Runnable() {
             public void run() {
-                Iterator var1 = vchs.iterator();
+                Iterator<VChunk> var1 = vchs.iterator();
 
                 while(var1.hasNext()) {
                     VChunk vch = (VChunk)var1.next();

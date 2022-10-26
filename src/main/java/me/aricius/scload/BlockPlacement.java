@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlockPlacement {
-    private static Map<BlockType, PlacementPriority> priorityMap = new HashMap();
+    private static Map<BlockType, PlacementPriority> priorityMap = new HashMap<BlockType, PlacementPriority>();
 
     public BlockPlacement() {
     }
@@ -23,25 +23,25 @@ public class BlockPlacement {
 
     static {
         BlockCategories.SAPLINGS.getAll().forEach((type) -> {
-            PlacementPriority var10000 = (PlacementPriority)priorityMap.put(type, PlacementPriority.LAST);
+            priorityMap.put(type, PlacementPriority.LAST);
         });
         BlockCategories.FLOWER_POTS.getAll().forEach((type) -> {
-            PlacementPriority var10000 = (PlacementPriority)priorityMap.put(type, PlacementPriority.LAST);
+            priorityMap.put(type, PlacementPriority.LAST);
         });
         BlockCategories.BUTTONS.getAll().forEach((type) -> {
-            PlacementPriority var10000 = (PlacementPriority)priorityMap.put(type, PlacementPriority.LAST);
+            priorityMap.put(type, PlacementPriority.LAST);
         });
         BlockCategories.ANVIL.getAll().forEach((type) -> {
-            PlacementPriority var10000 = (PlacementPriority)priorityMap.put(type, PlacementPriority.LAST);
+            priorityMap.put(type, PlacementPriority.LAST);
         });
         BlockCategories.WOODEN_PRESSURE_PLATES.getAll().forEach((type) -> {
-            PlacementPriority var10000 = (PlacementPriority)priorityMap.put(type, PlacementPriority.LAST);
+            priorityMap.put(type, PlacementPriority.LAST);
         });
         BlockCategories.RAILS.getAll().forEach((type) -> {
-            PlacementPriority var10000 = (PlacementPriority)priorityMap.put(type, PlacementPriority.LAST);
+            priorityMap.put(type, PlacementPriority.LAST);
         });
         BlockCategories.CARPETS.getAll().forEach((type) -> {
-            PlacementPriority var10000 = (PlacementPriority)priorityMap.put(type, PlacementPriority.LAST);
+            priorityMap.put(type, PlacementPriority.LAST);
         });
         priorityMap.put(BlockTypes.BLACK_BED, PlacementPriority.LAST);
         priorityMap.put(BlockTypes.BLUE_BED, PlacementPriority.LAST);
@@ -188,10 +188,10 @@ public class BlockPlacement {
         priorityMap.put(BlockTypes.SCULK_VEIN, PlacementPriority.LAST);
         //
         BlockCategories.DOORS.getAll().forEach((type) -> {
-            PlacementPriority var10000 = (PlacementPriority)priorityMap.put(type, PlacementPriority.FINAL);
+            priorityMap.put(type, PlacementPriority.FINAL);
         });
         BlockCategories.BANNERS.getAll().forEach((type) -> {
-            PlacementPriority var10000 = (PlacementPriority)priorityMap.put(type, PlacementPriority.FINAL);
+            priorityMap.put(type, PlacementPriority.FINAL);
         });
         priorityMap.put(BlockTypes.CACTUS, PlacementPriority.FINAL);
         priorityMap.put(BlockTypes.SUGAR_CANE, PlacementPriority.FINAL);

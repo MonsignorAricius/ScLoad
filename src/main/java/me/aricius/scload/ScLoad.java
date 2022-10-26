@@ -2,10 +2,6 @@ package me.aricius.scload;
 
 import java.io.File;
 
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -32,6 +28,7 @@ public class ScLoad extends JavaPlugin{
             this.u = new SLUtil(this, this.language_save, this.language);
             this.getServer().getPluginManager().registerEvents(new PlayerJoinEventListener(this), this);
             this.getCommand("scload").setExecutor(this.u);
+            this.getCommand("scload").setTabCompleter(new TabCompletions());
             this.schem_dir = this.getSchematicDirectory();
             instance = this;
         } else {
