@@ -19,7 +19,7 @@ public class PlayerJoinEventListener implements Listener {
             if (p.isOp()) {
                 new UpdateChecker(plg, 88674).getVersion(version -> {
                     if (!plg.getDescription().getVersion().equals(version)) {
-                        p.sendMessage(ChatColor.GREEN+"[ScLoad] There is a new version "+ChatColor.YELLOW+version+ChatColor.GREEN+" avalible. Currently "+ChatColor.YELLOW+plg.getDescription().getVersion());
+                        p.sendMessage(ChatColor.GREEN+"[ScLoad] There is a new version "+ChatColor.YELLOW+version+ChatColor.GREEN+" available. Currently installed "+ChatColor.YELLOW+plg.getDescription().getVersion());
                         p.sendMessage(ChatColor.GREEN+"https://www.spigotmc.org/resources/scload-reloaded.88674/");
                     }
                 });

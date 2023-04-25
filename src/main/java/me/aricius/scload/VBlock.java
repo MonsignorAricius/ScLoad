@@ -27,7 +27,7 @@ public class VBlock {
 
     public void placeBlockFast() {
         try {
-            world.setBlock(bvector, bblock, false);
+            world.setBlock(bvector, block, false);
         } catch (WorldEditException e) {
             e.printStackTrace();
         }
@@ -35,7 +35,7 @@ public class VBlock {
 
     public void placeBlock() {
         try {
-            world.setBlock(bvector, bblock, true);
+            world.setBlock(bvector, block, true);
         } catch (WorldEditException e) {
             e.printStackTrace();
         }
@@ -45,7 +45,7 @@ public class VBlock {
             if (getTypeId().equals(BlockTypes.AIR)) {
                 return;
             } else {
-                world.setBlock(bvector, bblock, false);
+                world.setBlock(bvector, block, false);
             }
         } catch (WorldEditException e) {
             e.printStackTrace();
@@ -57,7 +57,7 @@ public class VBlock {
             if (getTypeId().equals(BlockTypes.AIR)) {
                 return;
             } else {
-                world.setBlock(bvector, bblock, true);
+                world.setBlock(bvector, block, true);
             }
         } catch (WorldEditException e) {
             e.printStackTrace();
